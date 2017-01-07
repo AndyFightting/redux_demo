@@ -7,6 +7,8 @@
 
 <image src = 'https://github.com/AndyFightting/redux_demo/blob/master/22.jpeg' width='50%' height = '50%'/>
 
+[图片来源](http://staltz.com/unidirectional-user-interface-architectures.html)
+
 
 ###运行
 1. npm install
