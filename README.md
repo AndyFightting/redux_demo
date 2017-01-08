@@ -12,7 +12,8 @@ ReactDOM.render(
     </Provider>,
   document.getElementById('root')
 );
-
+```
+```
 const mapStateToProps = (state, ownProps) => ({
   active: ownProps.filter === state.visibilityFilter
 })
