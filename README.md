@@ -25,6 +25,52 @@ View是视图组件，通过connect方法得到容器组件ViewContainer，然�
 
 推荐[阮老师的博文](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_three_react-redux.html)，清晰易懂。
 
+###thunk 中间件
+觉得这个中间件没解决什么痛点，反而让逻辑更复杂了。看下面的点击按钮发送请求时，使用thunk和不使用thunk，觉得还是不用的好。
+
+```
+ onAsyncClick: () => {
+            // noThunkRequest(dispatch);  //not use thunk
+            dispatch(thunkRequest());    //use thunk
+        },
+        
+//----thunk-------//这个方法是返回一个函数，所以要用thunk模块
+const thunkRequest = () => (dispatch,getState) => {
+    console.log('thunk 开始-------');
+    return  fetch('http://facebook.github.io/react-native/movies.json')
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log('thunk请求成功-------',responseJson);
+            dispatch(numAction());
+        })
+        .catch((error) => {
+            console.error('thunk请求失败-------',error);
+        });
+};
+
+//-------no thunk------
+function noThunkRequest(dispatch) {
+    dispatch(stringAction('请求开始~'));
+    fetch('http://facebook.github.io/react-native/movies.json')
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log('请求成功-------',responseJson);
+            dispatch(stringAction('请求成功~'));
+        })
+        .catch((error) => {
+            dispatch(stringAction('请求失败~'));
+            console.error('请求失败-------',error);
+        });
+}
+
+function stringAction(msg) {
+    return {
+        type: 'STRING',
+        msg: msg,
+    }
+}
+```
+
 <image src = 'https://github.com/AndyFightting/redux_demo/blob/master/11.jpeg' width='50%' height = '50%'/>
 
 <image src = 'https://github.com/AndyFightting/redux_demo/blob/master/22.jpeg' width='50%' height = '50%'/>
