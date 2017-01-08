@@ -88,3 +88,5 @@ function stringAction(msg) {
 ###运行
 1. npm install
 2. npm start
+
+<image src = 'https://github.com/AndyFightting/redux_demo/blob/master/image4.png' width='70%' height = '70%'/>
