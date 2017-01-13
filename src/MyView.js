@@ -1,21 +1,16 @@
 import React,{ Component } from 'react';
 import {connect} from 'react-redux'
-import DevTools from './DevTools'
 
 class View extends Component{
       render(){
           return(
-              <div style={{height:400,width:600}}>
+              <div>
                   {this.props.num}
                   <button onClick={()=>this.props.onNumClick()} >num Tap</button>
                   <button onClick={()=>this.props.onStringClick('hello~')} >String Tap</button>
                   <button onClick={()=>this.props.onAsyncClick()} >异步请求</button>
                   {this.props.array}
-
-                  <DevTools/>
               </div>
-
-
           );
       }
 

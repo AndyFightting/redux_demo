@@ -52,7 +52,10 @@ const store  = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <MyView />
+        <div style={{height:400}}>
+            <MyView />
+            <DevTools />
+        </div>
     </Provider>,
   document.getElementById('root')
 );
