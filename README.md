@@ -95,6 +95,8 @@ function stringAction(msg) {
 
 ###[Vuex](http://vuex.vuejs.org/zh-cn/getting-started.html)
 
+<image src = 'https://github.com/AndyFightting/redux_demo/blob/master/vuex.png' width='60%' height = '60%'/>
+
 Vuex 和 Redux 很像，流程几乎一样只是叫法不一样。下面包括了Vuex的基本使用，当然在开发的时候应该把不同模块写在对应的文件中。
 
 ```
