@@ -283,32 +283,21 @@ Vuex 和 Redux 很像，流程几乎一样只是叫法不一样。下面包括�
 
 ### 疑问
 
-Vuex 使用 mapActions 或者 mapMutations 时如何传参？我好像没get到。
-
-解惑：论坛里有人说了，用这种方法没法传参，要传参就不能用这种方式了。[这里](https://forum.vuejs.org/t/vuex-mapmutations/2455)
-
-同理：Redux 用如下方式也是没法传参的：
+Vuex 使用 mapActions 或者 mapMutations 时如何传参？可能很多新人会有这样的疑惑。下面以mapActions为例，mapMutations也是一样的。
 
 ```
- const mapDispatchToProps =  ({
-     onNumClick: numAction,
-     onStringClick: stringAction,
- });
+methods:{
+  ...mapActions({
+      addTaped: 'addAction', 
+  })
+}
 ```
-要传参的话用如下方式：
 ```
-const mapDispatchToProps = (dispatch,ownProps) => {
-    return {
-        onNumClick: () => {
-            dispatch(numAction());
-        },
-
-        onStringClick: (msg) => {
-            dispatch(stringAction(msg));
-        },
-    };
-};
+actions:{
+ addAction(context,param){ //外面传进来的参数就是param
+ 
+ }
+}
 ```
 
-
-
+然后直接调用方法传参就可以了，如传对象 `addTaped({name:'andy'})`,传数字 `addTaped(100)`.然后就可以在对应的 addAction  里的 param 获取了。新手的疑惑主要在 ` addTaped: 'addAction',` 以为要` addTaped: {'addAction',xxx},`之类的处理。其实不用，mapActions 只是把方法名对应上，然后在方法调用的时候直接传参就可以了！
