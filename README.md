@@ -287,5 +287,28 @@ Vuex 使用 mapActions 或者 mapMutations 时如何传参？我好像没get到�
 
 解惑：论坛里有人说了，用这种方法没法传参，要传参就不能用这种方式了。[这里](https://forum.vuejs.org/t/vuex-mapmutations/2455)
 
+同理：Redux 用如下方式也是没法传参的：
+
+```
+ const mapDispatchToProps =  ({
+     onNumClick: numAction,
+     onStringClick: stringAction,
+ });
+```
+要传参的话用如下方式：
+``
+const mapDispatchToProps = (dispatch,ownProps) => {
+    return {
+        onNumClick: () => {
+            dispatch(numAction());
+        },
+
+        onStringClick: (msg) => {
+            dispatch(stringAction(msg));
+        },
+    };
+};
+```
+
 
 
