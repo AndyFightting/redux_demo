@@ -284,3 +284,8 @@ Vuex 和 Redux 很像，流程几乎一样只是叫法不一样。下面包括�
 ### 疑问
 
 Vuex 使用 mapActions 或者 mapMutations 时如何传参？我好像没get到。
+
+解惑：论坛里有人说了，用这种方法没法传参，要传参就不能用这种方式了。[这里](https://forum.vuejs.org/t/vuex-mapmutations/2455)
+
+
+
