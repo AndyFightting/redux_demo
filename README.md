@@ -296,7 +296,7 @@ Vuex 使用 mapActions 或者 mapMutations 时如何传参？我好像没get到�
  });
 ```
 要传参的话用如下方式：
-``
+```
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
         onNumClick: () => {
