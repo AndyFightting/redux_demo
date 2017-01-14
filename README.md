@@ -300,4 +300,13 @@ actions:{
 }
 ```
 
-然后直接调用方法传参就可以了，如传对象 `addTaped({name:'andy'})`,传数字 `addTaped(100)`.然后就可以在对应的 addAction  里的 param 获取了。新手的疑惑主要在 ` addTaped: 'addAction',` 以为要` addTaped: {'addAction',xxx},`之类的处理。其实不用，mapActions 只是把方法名对应上，然后在方法调用的时候直接传参就可以了！
+然后直接调用方法传参就可以了，如传对象 `addTaped({name:'andy'})`,传数字 `addTaped(100)`.然后就可以在对应的 addAction  里的 param 获取了。新手的疑惑主要在 ` addTaped: 'addAction',` 以为要` addTaped: {'type':addAction','param':'xxx'},`之类的处理。其实不用，mapActions 只是把方法名对应上，然后在方法调用的时候直接传参就可以了！[论坛](https://forum.vuejs.org/t/vuex-how-to-pass-an-argument-to-the-action-in-component-when-using-mapactions/3846)
+
+
+
+
+
+
+
+
+
