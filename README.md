@@ -1,3 +1,5 @@
+###[Reflux](http://cn.redux.js.org/)
+
 和Flux, Reflux 一样，Redux也是解决数据流程问题。与Reflux最大的区别是Redux有且只有一个完整的state树叫做store。
 
 注意：Reflux中的store概念就相当于Redux中的各个reducer返回的 state, 我把它们都理解为数据Modal。Redux中唯一的store相当于各个state的根节点，可以通过store来获取各state数据。
@@ -90,3 +92,193 @@ function stringAction(msg) {
 2. npm start
 
 <image src = 'https://github.com/AndyFightting/redux_demo/blob/master/image4.png' width='70%' height = '70%'/>
+
+###[Vuex](http://vuex.vuejs.org/zh-cn/getting-started.html)
+
+Vuex 和 Redux 很像，流程几乎一样只是叫法不一样。下面包括了Vuex的基本使用，当然在开发的时候应该把不同模块写在对应的文件中。
+
+```
+<template>
+  <div id="app">
+   state:  {{myNum}}
+    <button @click="addTaped(2)">增加</button>
+    <button @click="delTaped()">减少</button>
+    <button @click="stringTap('hello~')">String</button>
+    {{myString}}
+
+    <div>
+      getters:  {{$store.getters.nunGetter}} {{myNumGetter}}
+    </div>
+
+    <div>
+      mapState: {{myNumMap}}   {{myStringMap}}
+    </div>
+
+  </div>
+</template>
+
+<script>
+  import Vue from 'vue'
+  import Vuex,{mapState,mapGetters,mapActions,mapMutations} from 'vuex'
+  import createLogger from 'vuex/dist/logger'
+  Vue.use(Vuex);
+
+  const moduleNum = {
+    state:{
+      num: 0,
+    },
+
+    //相当于store的 computed 计算型方法,通过 store.getters.xxx 获取
+    getters:{
+        nunGetter(state,getters,rootState){
+          return state.num + 10;
+        },
+    },
+
+    actions:{
+      numAddAction(context,dic){
+          //方式1：
+//         context.commit('numAddMutation',{tag: dic.tag});
+
+          //方式2：
+          context.commit({
+              type: 'numAddMutation', //type: 对应 mutation里的方法名
+               tag: dic.tag,
+          });
+      },
+
+      numDelAction(context){
+         setTimeout(()=>{
+           context.commit({
+             type: 'numDelMutation',
+           })
+         },1000);
+      },
+    },
+
+    mutations:{
+      numAddMutation(state,dic){
+         state.num += dic.tag;
+      },
+
+      numDelMutation(state){
+          state.num --;
+      },
+    },
+  };
+
+  const moduleString = {
+      state:{
+         str: [],
+      },
+
+    actions:{
+       stringAddAction(context, dic){
+           context.commit({
+              type: 'stringAddMutation',
+              str: dic.str,
+           });
+       }
+    },
+
+    mutations:{
+       stringAddMutation(state, dic){
+           state.str.unshift(dic.str);
+       }
+    },
+
+  };
+
+  const myPlugin = store => {
+    store.subscribe((mutation, state) => {
+      // 每次 mutation 之后调用
+      // mutation 的格式为 { type, payload }
+      console.log('myPlugin-----:');
+      console.log(mutation);
+    })
+  };
+
+  const store = new Vuex.Store({
+     strict: process.env.NODE_ENV !== 'production',
+
+      //通过 store.state.numModule.xxx 获取对应的属性值
+      modules:{
+        numModule: moduleNum,
+        stringModule: moduleString,
+      },
+
+      //使用插件
+      plugins:[myPlugin,createLogger({collapsed: false})],
+  });
+
+  export default{
+    store, //在根节点注入的话所有组件自动获得store
+
+    computed:{
+      myNum(){
+        return store.state.numModule.num;
+      },
+
+      myString(){
+         return store.state.stringModule.str;
+      },
+
+     //mapState1: mapState 展开, mapState有啥好处，我好像没get到...
+      ...mapState({
+        myNumMap(state){
+           return state.numModule.num;
+      },
+         myStringMap(state){
+           return state.stringModule.str;
+         },
+       }),
+
+      //mapGetters: 获取getters
+      ...mapGetters({
+          myNumGetter: 'nunGetter', //即store.getters.nunGetter
+      }),
+    },
+
+    methods:{
+       addTaped(n){
+          //使用方式1
+         //store.dispatch('numAddAction',{tag: n});
+
+           //使用方式2
+          //通过 dispatch 发送一个 action对象，整个对象都作为载荷传给 mutation 函数
+          store.dispatch({
+             type: 'numAddAction', // type：对应action里的方法名
+             tag: n,               // 额外传入的参数，
+          });
+       },
+
+      delTaped(){
+          store.dispatch({
+              type: 'numDelAction'
+          });
+       },
+
+      stringTap(str){
+          store.dispatch({
+             type: 'stringAddAction',
+             str: str,
+          });
+      },
+
+//      ...mapActions({
+//        delTaped: 'numDelAction'
+//      }),
+
+//      ...mapMutations({
+//        delTaped: 'numDelMutation'
+//      }),
+
+    },
+  }
+</script>
+
+```
+
+### 疑问
+
+Vuex 使用 mapActions 或者 mapMutations 时如何传参？我好像没get到。
