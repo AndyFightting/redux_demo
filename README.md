@@ -1,4 +1,4 @@
-###[Reflux](http://cn.redux.js.org/)
+###[Redux](http://cn.redux.js.org/)
 
 和Flux, Reflux 一样，Redux也是解决数据流程问题。与Reflux最大的区别是Redux有且只有一个完整的state树叫做store。
 
